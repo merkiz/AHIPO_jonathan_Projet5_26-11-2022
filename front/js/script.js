@@ -1,22 +1,17 @@
 
 fetch("http://localhost:3000/api/products")
 .then((res) => res.json())
-    .then((data) => { 
-        console.log(data)
-    data.forEach(product => { 
-        displayProduct(product)
-    })
-   })
+    .then((data) => addProducts(data))
+    .catch(error => console.log({error}))
 
 
-function displayProduct(product) {
-       console.log(product);
-       const _id = product._id
-       const imageUrl = product.imageUrl
-       const altTxt = product.altTxt
-       const name = product.name
-       const description = product.description
+function addProducts(data) {
+       console.log(data);
        
+      data.forEach((product) => {
+        console.log("product: ", product)
+
+       const{ _id, imageUrl,altTxt, name, description } = product
        const anchor = makeAnchor(_id)
        const article = makeArticle()
        const image = makeImage(imageUrl,altTxt)
@@ -25,7 +20,8 @@ function displayProduct(product) {
        
        appendElementsToArticle(article,image,h3,p)
        appendArticleToAnchor(anchor,article)
-    }
+    })
+}
        
 function appendElementsToArticle(article,image,h3,p){
     article.appendChild(image)
@@ -34,7 +30,7 @@ function appendElementsToArticle(article,image,h3,p){
 }
 function makeAnchor(id){
     const anchor = document.createElement("a")
-    anchor.href = "./product.html?="+id
+    anchor.href = "./product.html?id="+id
     return anchor
 }
 function appendArticleToAnchor(anchor,article){
