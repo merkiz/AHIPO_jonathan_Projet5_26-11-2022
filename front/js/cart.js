@@ -30,9 +30,10 @@ for (let productInStorage of productLocalStorage) {
 //Fonction pour afficher tous les elements dans le panier
 function displayProduct(productApi, productInStorage) {
   console.log(productApi);
+  console.log(productInStorage);
   //Ajoute les éléments du Local Storage et Api dans le DOM
   const productCart = document.getElementById("cart__items");
-  productCart.innerHTML += `<article class="cart__item" data-id="${productInStorage.id}" data-color="${productInStorage.colors}">
+  productCart.innerHTML += `<article class="cart__item" data-id="${productInStorage.id}" data-color="${productInStorage.color}">
                       <div class="cart__item__img">
                         <img src="${productApi.imageUrl}" alt="${productApi.altTxt}">
                       </div>
@@ -112,24 +113,27 @@ function changeQuantity() {
   const itemQuantity = document.querySelectorAll(".itemQuantity");
 
   for (let i = 0; i < itemQuantity.length; i++) {
-    itemQuantity[i].addEventListener("change", (e) => {
-      const kanapId = itemQuantity[i].closest(".cart__item").dataset.id; //
-      const kanapColor = itemQuantity[i].closest(".cart__item").dataset.color;
+    itemQuantity[i].addEventListener("change", (event) => {
+      console.log(event.target);
+      //Recupere les produits du LocalStorage
+      let productLocalStorage = JSON.parse(localStorage.getItem("product"));
+
+      const itemTarget = event.target;
+
+      const kanapId = itemTarget.closest(".cart__item").dataset.id;
+      const kanapColor = itemTarget.closest(".cart__item").dataset.color;
 
       //Recupere les produits du localStorage
       const foundProduct = productLocalStorage.find(
         (product) => product.id == kanapId && product.color == kanapColor
       );
       //Modifie la quantité dans productLocalStorage pour ajouter le changement de itemQuantity
-      if (itemQuantity[i].value > 0) {
-        foundProduct.quantity = parseInt(itemQuantity[i].value);
-        productLocalStorage.quantity = foundProduct.quantity;
+      if (itemTarget.value > 0 && itemTarget.value < 100) {
+        foundProduct.quantity = parseInt(itemTarget.value);
+
         localStorage.setItem("product", JSON.stringify(productLocalStorage));
-        displayPriceQtty();
+        window.location.reload();
       } else {
-        foundProduct.quantity = itemQuantity[i].value;
-        productLocalStorage.quantity = foundProduct.quantity;
-        localStorage.setItem("product", JSON.stringify(productLocalStorage));
         alert("Veuillez ajouter une quantité supérieur à 0 ");
       }
     });
