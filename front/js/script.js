@@ -5,8 +5,6 @@ fetch("http://localhost:3000/api/products")
   .catch((error) => console.log({ error }));
 //fonction affichage des produits sur la page d'accueil
 function addProducts(data) {
-  console.log(data);
-
   data.forEach((product) => {
     const { _id, imageUrl, altTxt, name, description } = product;
     const anchor = makeAnchor(_id);

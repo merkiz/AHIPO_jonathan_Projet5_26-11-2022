@@ -1,9 +1,7 @@
 //Recuperation de l'id des produits
 const params = new URLSearchParams(document.location.search);
-console.log({ params });
 
 const id = params.get("id");
-console.log({ id });
 
 //Appel de l'API
 fetch(`http://localhost:3000/api/products/${id}`)
@@ -13,7 +11,6 @@ fetch(`http://localhost:3000/api/products/${id}`)
     }
   })
   .then(function (jsonKanap) {
-    console.log({ jsonKanap });
     displayKanap(jsonKanap);
     cartProduct(jsonKanap);
   })
@@ -23,11 +20,9 @@ fetch(`http://localhost:3000/api/products/${id}`)
 
 // Recuperation du choix de la couleur du DOM
 const colorsId = document.getElementById("colors");
-console.log({ colorsId });
 
 // Recuperation du choix de la quantité du DOM
 const productQuantity = document.getElementById("quantity");
-console.log({ productQuantity });
 
 // Fonction pour afficher les éléments des canapés sur la page produit
 function displayKanap(jsonKanap) {
@@ -49,7 +44,6 @@ function displayKanap(jsonKanap) {
 
   // Acrocher l'image crée à la class correspond
   imgClass.appendChild(imageElement);
-  console.log({ imgClass });
 
   //Recuperation des couleurs pour les mettre dans les options
   for (color of jsonKanap.colors) {

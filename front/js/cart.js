@@ -29,8 +29,6 @@ for (let productInStorage of productLocalStorage) {
 
 //Fonction pour afficher tous les elements dans le panier
 function displayProduct(productApi, productInStorage) {
-  console.log(productApi);
-  console.log(productInStorage);
   //Ajoute les éléments du Local Storage et Api dans le DOM
   const productCart = document.getElementById("cart__items");
   productCart.innerHTML += `<article class="cart__item" data-id="${productInStorage.id}" data-color="${productInStorage.color}">
